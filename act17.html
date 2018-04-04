@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <!-- Bootstrap CDN-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- Firebase Reference -->
+    <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css"/>
+
+    <script src="main.js"></script>
+</head>
+<body>
+    
+    <div class="container">
+
+        <div class="jumbotron">
+            <h1 class="text-center">Employee Data Management</h1>
+            <h3 class="text-center">A Comprehensive Directory of Employee Billable Hours</h3>
+        </div>
+    
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Make Your Bid</h3>
+                    </div>
+                    <div class="panel-body">
+                        <form>
+                        <div class="form-group">
+                            <label for="bidder-name">Your Name</label>
+                            <input class="form-control" id="bidder-name" type="text">
+                        </div>
+                        <div class="form-group">
+                            <label for="bidder-price">Your Price</label>
+                            <input class="form-control" id="bidder-price" type="number">
+                        </div>
+                    </div>
+                </div>
+            </div>  
+        </div>              
+        
+
+
+        <br>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Add Employee</h3>
+                    </div>
+                        <div class="panel-body">
+                            <form>
+                            <div class="form-group">
+                                <label for="employee-name">Employee Name</label>
+                                <input class="form-control" id="employee-name" type="text">
+                            </div>
+                            <div class="form-group">
+                                <label for="role">Role</label>
+                                <input class="form-control" id="role" type="number">
+                            </div>
+                            <div class="form-group">
+                                <label for="date">Start Date (DD/MM/YY - ex: 01/01/98)</label>
+                                <input class="form-control" id="date" type="number"> 
+                                <!-- need input for date -->
+                            </div>
+                            <div class="form-group">
+                                <label for="rate">Monthly Rate</label>
+                                <input class="form-control" id="rate" type="number">
+                            </div>
+                            <button class="btn btn-primary" id="submit-bid" type="submit">Submit</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <br>
+
+
+
+
+    <script>
+
+        
+    </script>
+
+    <style>
+    
+    /* .container {
+        border: 1px solid black;
+    } */
+
+    .jumbotron {
+        background-color: black;
+        color: white;
+        border-radius: 20px;
+    }
+
+
+
+    </style>
+
+
+</body>
+</html>
