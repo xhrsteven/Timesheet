@@ -32,7 +32,7 @@
         });
     });
     // Firebase watcher + initial loader HINT: .on("value")
-        database.ref().on("value", function (snapshot) {
+    database.ref().orderByChild("dateAdded").limitToLast(1).on("child_added", function (snapshot) {
                 // Log everything that's coming out of snapshot
             //     console.log(snapshot.val());
             // console.log(snapshot.val().name);
@@ -40,11 +40,14 @@
             // console.log(snapshot.val().age);
             // console.log(snapshot.val().comment);
             // Change the HTML to reflect
+            var monthWork = Date()-ParseInt(snapshot.val().date);
+            var totalBilled = monthWork * snapshot.val().rate;
             $("#name-display").text(snapshot.val().name);
-            $("#email-display").text(snapshot.val().role);
-            $("#age-display").text(snapshot.val().date);
-            $("#comment-display").text(snapshot.val().rate);
-            $('#totaltime-display').text()
+            $("#role-display").text(snapshot.val().role);
+            $("#date-display").text(snapshot.val().date);
+            $("#rate-display").text(snapshot.val().rate);
+            $('#totalTime-display').text(monthWork);
+            $('#totalBilled-display').text(totalBilled);
 
             // Handle the errors
         }, function (errorObject) {
