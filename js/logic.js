@@ -1,55 +1,77 @@
-// Initialize Firebase
+        // Initialize Firebase
         var config = {
                 apiKey: "AIzaSyC_r3C6oBEDD67Dxb1vtKy-ZdDRCs_XkvY",
-                authDomain: "fir-timesheet.firebaseapp.com",
-                databaseURL: "https://fir-timesheet.firebaseio.com",
-                storageBucket: "fir-timesheet.appspot.com"
+                authDomain: "timesheet-b87f8.firebaseapp.com",
+                databaseURL: "https://timesheet-b87f8.firebaseio.com",
+                storageBucket: "timesheet-b87f8.appspot.com"
         };
         firebase.initializeApp(config);
         // Create a variable to reference the database.
         var database = firebase.database();
-        // Initial Values
-        var name = "";
-        var role = "";
-        var date = '';
-        var rate = "";
+        
+        
         // Capture Button Click
-        $("#submit-bid").on("click", function (event) {
+        $("#add-employee").on("click", function (event) {
                 event.preventDefault();
 
             // Grabbed values from text-boxes
-            name = $("#employeeName-input").val().trim();
-            role = $("#role-input").val().trim();
-            date = $("#date-input").val().trim();
-            rate = $("#rate-input").val().trim();
-            // Code for "Setting values in the database"
-            database.ref().push({
-                name: name,
-                role: role,
-                date: date,
-                rate: rate,
-                dateAdded: firebase.database.ServerValue.TIMESTAMP
-        });
-    });
-    // Firebase watcher + initial loader HINT: .on("value")
-    database.ref().orderByChild("dateAdded").limitToLast(1).on("child_added", function (snapshot) {
-                // Log everything that's coming out of snapshot
-            //     console.log(snapshot.val());
-            // console.log(snapshot.val().name);
-            // console.log(snapshot.val().email);
-            // console.log(snapshot.val().age);
-            // console.log(snapshot.val().comment);
-            // Change the HTML to reflect
-            var monthWork = Date()-ParseInt(snapshot.val().date);
-            var totalBilled = monthWork * snapshot.val().rate;
-            $("#name-display").text(snapshot.val().name);
-            $("#role-display").text(snapshot.val().role);
-            $("#date-display").text(snapshot.val().date);
-            $("#rate-display").text(snapshot.val().rate);
-            $('#totalTime-display').text(monthWork);
-            $('#totalBilled-display').text(totalBilled);
+            var name = $("#employee-name-input").val().trim();
+            var role = $("#role-input").val().trim();
+            var date = moment($("#startdate-input").val().trim(),'DD/MM/YY').format('X');
+            var rate = $("#rate-input").val().trim();
 
-            // Handle the errors
-        }, function (errorObject) {
-                console.log("Errors handled: " + errorObject.code);
+            // Creates local "temporary" object for holding employee data
+            var newEmp ={
+                name: name,
+                role:role,
+                date: date,
+                rate: rate
+            }
+            // Code for "Setting values in the database"
+            database.ref().push(newEmp);
+
+            //Log everything to console
+            // console.log(newEmp.name);
+            // console.log(newEmp.role);
+            // console.log(newEmp.date);
+            // console.log(newEmp.rate);
+
+            //Clear all the text boxes
+            $('#employee-name-input').val('');
+            $('#role-input').val('');
+            $('#startdate-input').val('');
+            $('#rate-input').val('');
+    });
+
+    // Firebase watcher + initial loader 
+    database.ref().on("child_added", function (childSnapshot, prevChidKey) {
+            
+            // console.log(childSnapshot.val());
+
+            //store everything into variable
+            var empName = childSnapshot.val().name;
+            var empRole = childSnapshot.val().role;
+            var empDate = childSnapshot.val().date;
+            var empRate = childSnapshot.val().rate
+
+            //Employee info
+            // console.log(empName);
+            // console.log(empRole);
+            // console.log(empDate);
+            // console.log(empRate);
+
+            //Moment method
+            var empStartDate = moment.unix(empDate).format("MM/DD/YY");
+
+            //Calculate the month worked 
+            var empMonths = moment().diff(moment.unix(empDate, 'X'), 'months');
+            // console.log(empMonths);
+
+            //Calculate the total billed rate
+            var empBilled = empMonths * empRate;
+            // console.log(empBilled);
+
+            //Add each data into the table
+            $('#employee-table').append('<tr><td>'+empName +'</td><td>'+empRole + '</td><td>'+empStartDate + '</td><td>' + empMonths + '</td><td>' + empRate + '</td><td>' + empBilled + '</td></tr>');
+           
             });
